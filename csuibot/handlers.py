@@ -41,85 +41,85 @@ def shio(message):
     else:
         bot.reply_to(message, zodiac)
 
-""""
-    @param nama, no hp, no akun bni
-    @proccess register akun telegram ke dalam apps
-    @output pesan berhasil/tidak no telp disimpan dalam database
-""""
+
+    #@param nama, no hp, no akun bni
+    #@proccess register akun telegram ke dalam apps
+    #@output pesan berhasil/tidak no telp disimpan dalam database
+
 @bot.message_handler(regexp=r'^/register \w \d \d$')
 def register(message):
     app.logger.debug("'register' command detected")
 
-""""
-    @param nama toko, alamat toko
-    @proccess register user sebagai merchan (bisa digunakan setelah terdaftar sebagai user)
-    @output pesan berhasil/tidak no telp disimpan dalam database
-""""
+
+    #@param nama toko, alamat toko
+    #@proccess register user sebagai merchan (bisa digunakan setelah terdaftar sebagai user)
+    #@output pesan berhasil/tidak no telp disimpan dalam database
+
 @bot.message_handler(regexp=r'^/mregister \w \w$')
 def mregister(message):
     app.logger.debug("'mregister' command detected")
 
-""""
-    @param masih belum tahu API BRI perlu apa aja
-    @proccess memeriksa saldo dari BRI ePay
-    @output pesan saldo
-""""
+
+    #@param masih belum tahu API BRI perlu apa aja
+    #@proccess memeriksa saldo dari BRI ePay
+    #@output pesan saldo
+
 @bot.message_handler(regexp=r'^/balance$')
 def balance(message):
     app.logger.debug("'mregister' command detected")
 
-""""
-    @param kode_promo, kode_transaksi
-    @proccess bergabung dengan room chat promo diadakan. 
-              Terdapat validasi apakah balance mencukupi dan kode promo valid atau tidak
-    @output -
-""""
+
+    #@param kode_promo, kode_transaksi
+    #@proccess bergabung dengan room chat promo diadakan. 
+    #          Terdapat validasi apakah balance mencukupi dan kode promo valid atau tidak
+    #@output -
+
 @bot.message_handler(regexp=r'^/join \w \w$')
 def join(message):
     app.logger.debug("'join' command detected")
 
-""""
-    @param kode_transaksi
-    @proccess untuk memasukan token transaksi. Terdapat validasi apakah token valid atau tidak
-    @output pesan berhasil atau tidak
-""""
+
+    #@param kode_transaksi
+    #@proccess untuk memasukan token transaksi. Terdapat validasi apakah token valid atau tidak
+    #@output pesan berhasil atau tidak
+
 @bot.message_handler(regexp=r'^/token \w$')
 def token(message):
     app.logger.debug("'token' command detected")
 
-""""
-    @param kode room chat
-    @proccess untuk mengecheck status dari promo (masih berlaku atau tidak)
-    @output detail dari chat room promo tersebut
-""""
+
+    #@param kode room chat
+    #@proccess untuk mengecheck status dari promo (masih berlaku atau tidak)
+    #@output detail dari chat room promo tersebut
+
 @bot.message_handler(regexp=r'^/status \w$')
 def status(message):
     app.logger.debug("'status' command detected")
 
-""""
-    @param tanggal start, tanggal berakhir, judul promo, diskon(mungkin dalam persen) jumlah peserta, jumlah balance
-    @proccess untuk membuat promo dan chat room promo tersebut
-    @output detail dari chat room promo tersebut
-""""
+
+    #@param tanggal start, tanggal berakhir, judul promo, diskon(mungkin dalam persen) jumlah peserta, jumlah balance
+    #@proccess untuk membuat promo dan chat room promo tersebut
+    #@output detail dari chat room promo tersebut
+
 @bot.message_handler(regexp=r'^/promo$')
 def promo(message):
     app.logger.debug("'promo' command detected")
 
-""""
-    @param jumlah transaksi
-    @proccess untuk membuat kode transaksi
-    @output kode transaksi kalau berhasil , pesan kalau gagal
-""""
+
+    #@param jumlah transaksi
+    #@proccess untuk membuat kode transaksi
+    #@output kode transaksi kalau berhasil , pesan kalau gagal
+
 @bot.message_handler(regexp=r'^/bill \w$')
 def bill(message):
     app.logger.debug("'bill' command detected")
 
-""""
-    Tambahan fungsi notifikasi, kayaknya sulit kalaujadi method 
-    @param jumlah transaksi
-    @proccess untuk membuat kode transaksi
-    @output kode transaksi kalau berhasil , pesan kalau gagal
-""""
+
+    #Tambahan fungsi notifikasi, kayaknya sulit kalaujadi method 
+    #@param jumlah transaksi
+    #@proccess untuk membuat kode transaksi
+    #@output kode transaksi kalau berhasil , pesan kalau gagal
+
 
 def parse_date(text):
     return tuple(map(int, text.split('-')))
