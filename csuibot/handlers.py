@@ -46,7 +46,14 @@ def shio(message):
     #@proccess register akun telegram ke dalam apps
     #@output pesan berhasil/tidak no telp disimpan dalam database
 
-@bot.message_handler(regexp=r'^/register \w \d \d$')
+
+@bot.message_handler(regexp=r'^/testuser \w*$')
+def testuser(message):
+    app.logger.debug("'register' command detected")
+    _, nama = message.text.split(' ')
+    
+
+@bot.message_handler(regexp=r'^/register \w* \d \d$')
 def register(message):
     app.logger.debug("'register' command detected")
 
