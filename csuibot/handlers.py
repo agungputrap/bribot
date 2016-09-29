@@ -50,7 +50,6 @@ def shio(message):
 @bot.message_handler(regexp=r'^/testuser \w*$')
 def testuser(message):
     app.logger.debug("'register' command detected")
-    _, nama = message.text.split(' ')
     
 
 @bot.message_handler(regexp=r'^/register \w* \d \d$')
