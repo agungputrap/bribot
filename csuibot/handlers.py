@@ -100,7 +100,7 @@ def ballance(message):
         if(json_response['statusId'] == 0):
             bot.reply_to(message,json_response['mesage'])
         else:
-            bot.reply_to(message,'Jumlah saldo dari BRI ePay anda adalah  '+json_response['result'])
+            bot.reply_to(message,'Jumlah saldo dari BRI ePay anda adalah  '+json_response['result']['balance'])
     else:
         bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
     #@param kode_promo, kode_transaksi
