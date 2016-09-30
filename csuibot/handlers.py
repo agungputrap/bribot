@@ -55,7 +55,7 @@ def register(message):
     namaold, password, nope = processed.split('-')
     nama = '_'.join(namaold.split(' '))
     idtel = message.chat.id
-    r = requests.get('http://portfolio.hnymnky.com/register.php?username='+nama+'&password='+password+'&phone='+nope+'&id_telegram='+idtel)
+    r = requests.get('http://portfolio.hnymnky.com/register.php?username='+nama+'&password='+password+'&phone='+nope+'&id_telegram='+str(idtel))
     json_response = r.json()
     if(r.status_code == 200):
         if(json_response['statusId'] == 0):
