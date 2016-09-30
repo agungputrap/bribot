@@ -51,7 +51,7 @@ def shio(message):
 def register(message):
     app.logger.debug("'register' command detected")
     _, value = message.text.split(' ')
-    processed = value[2:len(value)]
+    processed = value[0:len(value)]
     namaold, password, nope = processed.split('-')
     nama = '_'.join(namaold.split(' '))
     idtel = message.chat.id

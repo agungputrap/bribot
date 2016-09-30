@@ -2,7 +2,7 @@ import re
 import requests
 import shlex
 
-text = "/register  hafiyyan sayyid-haha-087877319065"
+text = "/register hafiyyan sayyid-haha-087877319065"
 text2 = '/zodiac 1994-08-06'
 
 pattern = re.search(r'^/register .*$', text)
