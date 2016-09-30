@@ -90,11 +90,18 @@ def mregister(message):
     #@proccess memeriksa saldo dari BRI ePay
     #@output pesan saldo
 
-@bot.message_handler(regexp=r'^/balance$')
-def balance(message):
+@bot.message_handler(regexp=r'^/ballance$')
+def ballance(message):
     app.logger.debug("'mregister' command detected")
-
-
+    idtel = message.chat.id
+    r = requests.get('http://portfolio.hnymnky.com/balance.php?id_telegram='+str(idtel))
+    if(r.status_code == 200):
+        if(json_response['statusId'] == 0):
+            bot.reply_to(message,json_response['mesage'])
+        else:
+            bot.reply_to(message,'Jumlah saldo dari BRI ePay anda adalah  '+json_response['mesage'])
+    else:
+        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
     #@param kode_promo, kode_transaksi
     #@proccess bergabung dengan room chat promo diadakan. 
     #          Terdapat validasi apakah balance mencukupi dan kode promo valid atau tidak
