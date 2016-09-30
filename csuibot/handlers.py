@@ -46,17 +46,23 @@ def shio(message):
     #@proccess register akun telegram ke dalam apps
     #@output pesan berhasil/tidak no telp disimpan dalam database
 
-
-@bot.message_handler(regexp=r'^/testuser \w*$')
-def testuser(message):
-    app.logger.debug("'register' command detected")
-    
-
-@bot.message_handler(regexp=r'^/register \w* \d \d$')
+@bot.message_handler(regexp=r'^/register .*$')
 def register(message):
     app.logger.debug("'register' command detected")
-
-
+    _, value = message.text.split(' ')
+    processed = value[2:len(value)]
+    namaold, password, norek = processed.split('-')
+    nama = '_'.join(namaold.split(' '))
+    idtel = message.user.id
+    r = requests.get('http://portfolio.hnymnky.com/register.php?username='+nama+'&password='+password+'&phone='+nope+'&id_telegram='+idtel)
+    json_response = r.json()
+    if(r.status_code == 200):
+        if(json_response['statusId'] == 0):
+            bot.reply_to(message,json_response['message'])
+        else:
+            bot.reply_to(message,'Akun'+namaold+' berhasil disimpan')
+    else:
+        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
     #@param nama toko, alamat toko
     #@proccess register user sebagai merchan (bisa digunakan setelah terdaftar sebagai user)
     #@output pesan berhasil/tidak no telp disimpan dalam database
