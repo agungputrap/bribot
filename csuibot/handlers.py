@@ -68,7 +68,7 @@ def register(message):
     #@proccess register user sebagai merchan (bisa digunakan setelah terdaftar sebagai user)
     #@output pesan berhasil/tidak no telp disimpan dalam database
 
-@bot.message_handler(regexp=r'^/mregister \w \w$')
+@bot.message_handler(regexp=r'^/mregister .*$')
 def mregister(message):
     app.logger.debug("'mregister' command detected")
     _, value = text.split('/mregister')
