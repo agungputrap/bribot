@@ -71,8 +71,21 @@ def register(message):
 @bot.message_handler(regexp=r'^/mregister \w \w$')
 def mregister(message):
     app.logger.debug("'mregister' command detected")
-
-
+    _, value = text.split('/mregister')
+    processed = value[1:len(value)]
+    namatokoold, alamatold = processed.split('-')
+    namatoko = '_'.join(namatokoold.split(' '))
+    alamat = '_'.join(alamatold.split(' '))
+    idtel = message.chat.id
+    r = requests.get('http://portfolio.hnymnky.com/mregister.php?id_telegram='+str(idtel)+'&nama_toko='+namatoko+'&alamat='+alamat)
+    json_response = r.json()
+    if(r.status_code == 200):
+        if(json_response['statusId'] == 0):
+            bot.reply_to(message,json_response['mesage'])
+        else:
+            bot.reply_to(message,'Toko '+namatokoold+' berhasil disimpan')
+    else:
+        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
     #@param masih belum tahu API BRI perlu apa aja
     #@proccess memeriksa saldo dari BRI ePay
     #@output pesan saldo

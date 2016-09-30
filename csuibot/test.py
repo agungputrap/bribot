@@ -2,22 +2,24 @@ import re
 import requests
 import shlex
 
-text = "/register hafiyyan kunkun fadhlillah-haha-087877319065"
+text = "/mregister Toko Demon-jalan raya sanja citeureup bogor"
 text2 = '/zodiac 1994-08-06'
 
-pattern = re.search(r'^/register .*$', text)
+pattern = re.search(r'^/mregister .*$', text)
 pattern2 = re.search(r'^/zodiac \d{4}\-\d{2}\-\d{2}$', text2)
 if pattern:
-	_, value = text.split('/register')
-	processed = value[2:len(value)]
-	nama, password, nope = processed.partition('-')
-	namabaru = '_'.join(nama.split(' '))
+	_, value = text.split('/mregister')
+	processed = value[1:len(value)]
+	namatokoold, alamatold = processed.split('-')
+	namatoko = '_'.join(namatokoold.split(' '))
+	alamat = '_'.join(alamatold.split(' '))
+	print alamat
 	idtel = '1235'
 	#print namabaru
-	r = requests.get('http://portfolio.hnymnky.com/register.php?username='+namabaru+'&password='+password+'&phone='+nope+'&id_telegram='+idtel)
-	json = r.json()
-	print r.status_code
-	if(json['statusId'] == 0 ):
-		print json
+	r = requests.get('http://portfolio.hnymnky.com/mregister.php?id_telegram='+idtel+'&nama_toko='+namatoko+'&alamat='+alamat)
+	#json = r.json()
+	print r.json()
+	#if(json['statusId'] == 0 ):
+	#	print json
 else:
 	print "error"
