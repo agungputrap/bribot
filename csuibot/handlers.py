@@ -59,7 +59,7 @@ def register(message):
     json_response = r.json()
     if(r.status_code == 200):
         if(json_response['statusId'] == 0):
-            bot.reply_to(message,json_response['message'])
+            bot.reply_to(message,json_response['mesage'])
         else:
             bot.reply_to(message,'Akun '+namaold+' berhasil disimpan')
     else:

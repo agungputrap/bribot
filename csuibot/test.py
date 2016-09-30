@@ -18,6 +18,6 @@ if pattern:
 	json = r.json()
 	print r.status_code
 	if(json['statusId'] == 0 ):
-		print nama
+		print json
 else:
 	print "error"
