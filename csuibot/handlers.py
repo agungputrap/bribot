@@ -71,7 +71,7 @@ def register(message):
 @bot.message_handler(regexp=r'^/mregister .*$')
 def mregister(message):
     app.logger.debug("'mregister' command detected")
-    _, value = text.split('/mregister')
+    _, value = message.text.split('/mregister')
     processed = value[1:len(value)]
     namatokoold, alamatold = processed.split('-')
     namatoko = '_'.join(namatokoold.split(' '))
