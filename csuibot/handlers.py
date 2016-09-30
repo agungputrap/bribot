@@ -52,7 +52,7 @@ def register(message):
     app.logger.debug("'register' command detected")
     _, value = message.text.split('/register')
     processed = value[1:len(value)]
-    namaold, password, nope = processed.partition('-')
+    namaold, password, nope = processed.split('-')
     nama = '_'.join(namaold.split(' '))
     idtel = message.chat.id
     r = requests.get('http://portfolio.hnymnky.com/register.php?username='+nama+'&password='+password+'&phone='+nope+'&id_telegram='+str(idtel))
