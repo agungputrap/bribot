@@ -61,7 +61,7 @@ def register(message):
         if(json_response['statusId'] == 0):
             bot.reply_to(message,json_response['message'])
         else:
-            bot.reply_to(message,'Akun'+namaold+' berhasil disimpan')
+            bot.reply_to(message,'Akun '+namaold+' berhasil disimpan')
     else:
         bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
     #@param nama toko, alamat toko

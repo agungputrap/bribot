@@ -17,7 +17,7 @@ if pattern:
 	r = requests.get('http://portfolio.hnymnky.com/register.php?username='+namabaru+'&password='+password+'&phone='+nope+'&id_telegram='+idtel)
 	json = r.json()
 	print r.status_code
-	if(json['statusId'] == 0):
-		print "Fuck you"
+	if(json['statusId'] == 0 ):
+		print nama
 else:
 	print "error"
