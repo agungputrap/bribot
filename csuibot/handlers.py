@@ -132,20 +132,22 @@ def transfer(message):
 @bot.message_handler(regexp=r'^/join .*$')
 def join(message):
     app.logger.debug("'join' command detected")
-    _, value = message.text.split('/join')
-    processed = value[1:len(value)]
-    idpromo, jml = processed.split('-')
-    idtel = message.chat.id
-    r = requests.get('http://portfolio.hnymnky.com/join.php?id_telegram='+str(idtel)+'&id_promo='+idpromo+'&price='+jml)
-    json_response = r.json()
-    if(r.status_code == 200):
-        if(json_response['statusId'] == 0):
-            bot.reply_to(message,json_response['mesage'])
+    try:
+        _, value = message.text.split('/join')
+        processed = value[1:len(value)]
+        idpromo, jml = processed.split('-')
+        idtel = message.chat.id
+        r = requests.get('http://portfolio.hnymnky.com/join.php?id_telegram='+str(idtel)+'&id_promo='+idpromo+'&price='+jml)
+        json_response = r.json()
+        if(r.status_code == 200):
+            if(json_response['statusId'] == 0):
+                bot.reply_to(message,json_response['mesage'])
+            else:
+                bot.reply_to(message,json_response['result'])
         else:
-            bot.reply_to(message,json_response['result'])
-    else:
-        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
-
+            bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
+    except ValueError:
+        bot.reply_to(message,"Format Salah")
     #@param kode room chat
     #@proccess untuk mengecheck status dari promo (masih berlaku atau tidak)
     #@output detail dari chat room promo tersebut
