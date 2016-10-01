@@ -129,10 +129,22 @@ def transfer(message):
     #@proccess untuk memasukan token transaksi. Terdapat validasi apakah token valid atau tidak
     #@output pesan berhasil atau tidak
 
-@bot.message_handler(regexp=r'^/token \w$')
-def token(message):
-    app.logger.debug("'token' command detected")
-
+@bot.message_handler(regexp=r'^/join .*$')
+def join(message):
+    app.logger.debug("'join' command detected")
+    _, value = message.text.split('/join')
+    processed = value[1:len(value)]
+    idpromo, jml = processed.split('-')
+    idtel = message.chat.id
+    r = requests.get('http://portfolio.hnymnky.com/join.php?id_telegram='+str(idtel)+'&id_promo='+nope+'&price='+jml)
+    json_response = r.json()
+    if(r.status_code == 200):
+        if(json_response['statusId'] == 0):
+            bot.reply_to(message,json_response['mesage'])
+        else:
+            bot.reply_to(message,json_response['result'])
+    else:
+        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
 
     #@param kode room chat
     #@proccess untuk mengecheck status dari promo (masih berlaku atau tidak)
