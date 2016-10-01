@@ -150,11 +150,11 @@ def join(message):
     #@proccess untuk mengecheck status dari promo (masih berlaku atau tidak)
     #@output detail dari chat room promo tersebut
 
-@bot.message_handler(regexp=r'^/status$')
+@bot.message_handler(regexp=r'^/status \w*$')
 def status(message):
     app.logger.debug("'status' command detected")
-    idtel = message.chat.id
-    r = requests.get('http://portfolio.hnymnky.com/status.php?id_telegram='+str(idtel))
+    _, idprom = message.text.split(' ')
+    r = requests.get('http://portfolio.hnymnky.com/status.php?id_promo='+idprom)
     if(r.status_code == 200):
         if(json_response['statusId'] == 0):
             bot.reply_to(message,json_response['mesage'])
@@ -174,12 +174,16 @@ def check_promo(message):
     _, idprom = message.text.split(' ')
     r = requests.get('http://portfolio.hnymnky.com/addBalance.php?id_promo='+str(idprom))
     if(r.status_code == 200):
-        if(json_response['statusId'] == 0):
+        r2 = requests.get('http://portfolio.hnymnky.com/announce.php?id_promo='+str(idprom))
+        if(r2.status_code == 200):
+            if(json_response['statusId'] == 0):
             bot.reply_to(message,json_response['mesage'])
+            else:
+                valueproc = json_response['result']
+                for user in valueproc:
+                    bot.send_message(int(user), "Selamat anda mendapat diskon dari id promo "+idprom)
         else:
-            valueproc = json_response['result']
-            for user in valueproc:
-                bot.send_message(int(user), "Selamat anda mendapat diskon dari id promo "+idprom)
+            bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")    
     else:
         bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
     #@param jumlah transaksi
