@@ -115,7 +115,7 @@ def transfer(message):
     processed = value[1:len(value)]
     nope, jml = processed.split('-')
     idtel = message.chat.id
-    r = requests.get('http://portfolio.hnymnky.com/id_telegram='+str(idtel)+'&phome='+nope+'&amount='+jml)
+    r = requests.get('http://portfolio.hnymnky.com/transfer.php?id_telegram='+str(idtel)+'&phome='+nope+'&amount='+jml)
     json_response = r.json()
     if(r.status_code == 200):
         if(json_response['statusId'] == 0):
