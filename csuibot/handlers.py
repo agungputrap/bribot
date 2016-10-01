@@ -155,12 +155,12 @@ def status(message):
     app.logger.debug("'status' command detected")
     _, idprom = message.text.split(' ')
     r = requests.get('http://portfolio.hnymnky.com/status.php?id_promo='+idprom)
+    json_response = r.json()
     if(r.status_code == 200):
         if(json_response['statusId'] == 0):
             bot.reply_to(message,json_response['mesage'])
         else:
             valueproc = json_response['result']
-
             bot.reply_to(message,valueproc)
     else:
         bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
