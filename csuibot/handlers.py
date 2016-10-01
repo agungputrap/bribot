@@ -189,6 +189,7 @@ def check_promo(message):
     r = requests.get('http://portfolio.hnymnky.com/addBalance.php?id_promo='+str(idprom))
     if(r.status_code == 200):
         r2 = requests.get('http://portfolio.hnymnky.com/announce.php?id_promo='+str(idprom))
+        json_response = r2.json()
         if(r2.status_code == 200):
             if(json_response['statusId'] == 0):
                 bot.reply_to(message,json_response['mesage'])
