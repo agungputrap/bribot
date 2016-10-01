@@ -90,8 +90,8 @@ def mregister(message):
     #@proccess memeriksa saldo dari BRI ePay
     #@output pesan saldo
 
-@bot.message_handler(regexp=r'^/ballance$')
-def ballance(message):
+@bot.message_handler(regexp=r'^/balance$')
+def balance(message):
     app.logger.debug("'ballance' command detected")
     idtel = message.chat.id
     r = requests.get('http://portfolio.hnymnky.com/balance.php?id_telegram='+str(idtel))
@@ -150,20 +150,38 @@ def join(message):
     #@proccess untuk mengecheck status dari promo (masih berlaku atau tidak)
     #@output detail dari chat room promo tersebut
 
-@bot.message_handler(regexp=r'^/status \w$')
+@bot.message_handler(regexp=r'^/status$')
 def status(message):
     app.logger.debug("'status' command detected")
+    idtel = message.chat.id
+    r = requests.get('http://portfolio.hnymnky.com/status.php?id_telegram='+str(idtel))
+    if(r.status_code == 200):
+        if(json_response['statusId'] == 0):
+            bot.reply_to(message,json_response['mesage'])
+        else:
+            valueproc = json_response['result']
 
-
+            bot.reply_to(message,valueproc)
+    else:
+        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
     #@param tanggal start, tanggal berakhir, judul promo, diskon(mungkin dalam persen) jumlah peserta, jumlah balance
     #@proccess untuk membuat promo dan chat room promo tersebut
     #@output detail dari chat room promo tersebut
 
-@bot.message_handler(regexp=r'^/promo$')
-def promo(message):
-    app.logger.debug("'promo' command detected")
-
-
+@bot.message_handler(regexp=r'^/check_promo \w*$')
+def check_promo(message):
+    app.logger.debug("'check_promo' command detected")
+    _, idprom = message.text.split(' ')
+    r = requests.get('http://portfolio.hnymnky.com/addBalance.php?id_promo='+str(idprom))
+    if(r.status_code == 200):
+        if(json_response['statusId'] == 0):
+            bot.reply_to(message,json_response['mesage'])
+        else:
+            valueproc = json_response['result']
+            for user in valueproc:
+                bot.send_message(int(user), "Selamat anda mendapat diskon dari id promo "+idprom)
+    else:
+        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
     #@param jumlah transaksi
     #@proccess untuk membuat kode transaksi
     #@output kode transaksi kalau berhasil , pesan kalau gagal
