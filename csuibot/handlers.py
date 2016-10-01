@@ -160,7 +160,11 @@ def status(message):
         if(json_response['statusId'] == 0):
             bot.reply_to(message,json_response['mesage'])
         else:
-            valueproc = json_response['result']
+            nama = 'Nama Promo '+json_response['result']['name']+'/n'
+            startpro = 'Mulai Tanggal '+json_response['result']['start']+'/n'
+            endpro = 'Berakhir Tanggal'+json_response['result']['end']+'/n'
+            part = 'Jumlah Pelanggan '+'Berakhir Tanggal'+json_response['result']['participant']
+            valueproc = nama+startpro+endpro+part
             bot.reply_to(message,valueproc)
     else:
         bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
