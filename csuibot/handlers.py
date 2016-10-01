@@ -177,7 +177,7 @@ def check_promo(message):
         r2 = requests.get('http://portfolio.hnymnky.com/announce.php?id_promo='+str(idprom))
         if(r2.status_code == 200):
             if(json_response['statusId'] == 0):
-            bot.reply_to(message,json_response['mesage'])
+                bot.reply_to(message,json_response['mesage'])
             else:
                 valueproc = json_response['result']
                 for user in valueproc:
