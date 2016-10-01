@@ -108,7 +108,7 @@ def ballance(message):
     #          Terdapat validasi apakah balance mencukupi dan kode promo valid atau tidak
     #@output -
 
-@bot.message_handler(regexp=r'^/transfer \w \w$')
+@bot.message_handler(regexp=r'^/transfer .*$')
 def transfer(message):
     app.logger.debug("'transfer' command detected")
     _, value = message.text.split('/transfer')
