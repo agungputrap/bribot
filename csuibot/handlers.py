@@ -172,7 +172,7 @@ def status(message):
         else:
             nama = 'Nama Promo '+json_response['result']['name']+'\n'
             startpro = 'Mulai Tanggal '+json_response['result']['start']+'\n'
-            endpro = 'Berakhir Tanggal'+json_response['result']['end']+'\n'
+            endpro = 'Berakhir Tanggal '+json_response['result']['end']+'\n'
             part = 'Jumlah Pelanggan '+json_response['result']['participant']
             valueproc = nama+startpro+endpro+part
             bot.reply_to(message,valueproc)
