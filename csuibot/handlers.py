@@ -197,7 +197,7 @@ def check_promo(message):
                 valueproc = json_response['result']
                 for user in valueproc:
                     bot.send_message(int(user), "Selamat anda mendapat diskon dari Promo : "+json_response['nama'])
-                bot.reply_to(message.chat.id,"Berhasil mengirimkan Kode Promo")
+                bot.reply_to(message,"Berhasil mengirimkan Kode Promo")
         else:
             bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")    
     else:
