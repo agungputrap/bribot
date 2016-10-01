@@ -136,7 +136,7 @@ def join(message):
     processed = value[1:len(value)]
     idpromo, jml = processed.split('-')
     idtel = message.chat.id
-    r = requests.get('http://portfolio.hnymnky.com/join.php?id_telegram='+str(idtel)+'&id_promo='+nope+'&price='+jml)
+    r = requests.get('http://portfolio.hnymnky.com/join.php?id_telegram='+str(idtel)+'&id_promo='+idpromo+'&price='+jml)
     json_response = r.json()
     if(r.status_code == 200):
         if(json_response['statusId'] == 0):
