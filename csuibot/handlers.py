@@ -127,7 +127,7 @@ def transfer(message):
         if(r.status_code == 200):
             if(json_response['statusId'] == 0):
                 bot.reply_to(message,json_response['mesage'])
-           else:
+            else:
                 bot.reply_to(message,json_response['result'])
         else:
            bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
