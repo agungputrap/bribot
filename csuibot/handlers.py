@@ -50,20 +50,23 @@ def shio(message):
 @bot.message_handler(regexp=r'^/register .*$')
 def register(message):
     app.logger.debug("'register' command detected")
-    _, value = message.text.split('/register')
-    processed = value[1:len(value)]
-    namaold, password, nope = processed.split('-')
-    nama = '_'.join(namaold.split(' '))
-    idtel = message.chat.id
-    r = requests.get('http://portfolio.hnymnky.com/register.php?username='+nama+'&password='+password+'&phone='+nope+'&id_telegram='+str(idtel))
-    json_response = r.json()
-    if(r.status_code == 200):
-        if(json_response['statusId'] == 0):
-            bot.reply_to(message,json_response['mesage'])
+    try:
+        _, value = message.text.split('/register')
+        processed = value[1:len(value)]
+        namaold, password, nope = processed.split('-')
+        nama = '_'.join(namaold.split(' '))
+        idtel = message.chat.id
+        r = requests.get('http://portfolio.hnymnky.com/register.php?username='+nama+'&password='+password+'&phone='+nope+'&id_telegram='+str(idtel))
+        json_response = r.json()
+        if(r.status_code == 200):
+            if(json_response['statusId'] == 0):
+                bot.reply_to(message,json_response['mesage'])
+            else:
+                bot.reply_to(message,'Akun '+namaold+' berhasil disimpan')
         else:
-            bot.reply_to(message,'Akun '+namaold+' berhasil disimpan')
-    else:
-        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
+            bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
+    except ValueError:
+        bot.reply_to(message,"Format Salah")
     #@param nama toko, alamat toko
     #@proccess register user sebagai merchan (bisa digunakan setelah terdaftar sebagai user)
     #@output pesan berhasil/tidak no telp disimpan dalam database
@@ -71,21 +74,24 @@ def register(message):
 @bot.message_handler(regexp=r'^/mregister .*$')
 def mregister(message):
     app.logger.debug("'mregister' command detected")
-    _, value = message.text.split('/mregister')
-    processed = value[1:len(value)]
-    namatokoold, alamatold = processed.split('-')
-    namatoko = '_'.join(namatokoold.split(' '))
-    alamat = '_'.join(alamatold.split(' '))
-    idtel = message.chat.id
-    r = requests.get('http://portfolio.hnymnky.com/mregister.php?id_telegram='+str(idtel)+'&nama_toko='+namatoko+'&alamat='+alamat)
-    json_response = r.json()
-    if(r.status_code == 200):
-        if(json_response['statusId'] == 0):
-            bot.reply_to(message,json_response['mesage'])
+    try:
+        _, value = message.text.split('/mregister')
+        processed = value[1:len(value)]
+        namatokoold, alamatold = processed.split('-')
+        namatoko = '_'.join(namatokoold.split(' '))
+        alamat = '_'.join(alamatold.split(' '))
+        idtel = message.chat.id
+        r = requests.get('http://portfolio.hnymnky.com/mregister.php?id_telegram='+str(idtel)+'&nama_toko='+namatoko+'&alamat='+alamat)
+        json_response = r.json()
+        if(r.status_code == 200):
+            if(json_response['statusId'] == 0):
+                bot.reply_to(message,json_response['mesage'])
+            else:
+                bot.reply_to(message,'Toko '+namatokoold+' berhasil disimpan')
         else:
-            bot.reply_to(message,'Toko '+namatokoold+' berhasil disimpan')
-    else:
-        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
+            bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
+    except ValueError:
+        bot.reply_to(message,"Format Salah")
     #@param masih belum tahu API BRI perlu apa aja
     #@proccess memeriksa saldo dari BRI ePay
     #@output pesan saldo
