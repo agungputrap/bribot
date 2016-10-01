@@ -92,7 +92,7 @@ def mregister(message):
 
 @bot.message_handler(regexp=r'^/ballance$')
 def ballance(message):
-    app.logger.debug("'mregister' command detected")
+    app.logger.debug("'ballance' command detected")
     idtel = message.chat.id
     r = requests.get('http://portfolio.hnymnky.com/balance.php?id_telegram='+str(idtel))
     json_response = r.json()
@@ -108,10 +108,22 @@ def ballance(message):
     #          Terdapat validasi apakah balance mencukupi dan kode promo valid atau tidak
     #@output -
 
-@bot.message_handler(regexp=r'^/join \w \w$')
-def join(message):
-    app.logger.debug("'join' command detected")
-
+@bot.message_handler(regexp=r'^/transfer \w \w$')
+def transfer(message):
+    app.logger.debug("'transfer' command detected")
+    _, value = message.text.split('/transfer')
+    processed = value[1:len(value)]
+    nope, jml = processed.split('-')
+    idtel = message.chat.id
+    r = requests.get('http://portfolio.hnymnky.com/id_telegram='+str(idtel)+'&phome='+nope+'&amount='+jml)
+    json_response = r.json()
+    if(r.status_code == 200):
+        if(json_response['statusId'] == 0):
+            bot.reply_to(message,json_response['mesage'])
+        else:
+            bot.reply_to(message,json_response['result'])
+    else:
+        bot.reply_to(message,"Terjadi kesalahan terhadap server, silahkan coba beberapa saat lagi")
 
     #@param kode_transaksi
     #@proccess untuk memasukan token transaksi. Terdapat validasi apakah token valid atau tidak
